@@ -1,0 +1,21 @@
+.table {
+  border-collapse: collapse;
+  border: 1px solid var(--table-border-color);
+}
+
+.table__body {
+  border-bottom: 1px solid var(--table-border-color);
+}
+
+.table__header {
+  border-bottom: 1px solid var(--table-border-color);
+  border-right: 1px solid var(--table-border-color);
+  padding: 2px 4px;
+  background-color: var(--table-header-background-color);
+}
+
+.table__cell {
+  border-bottom: 1px solid var(--table-border-color);
+  border-right: 1px solid var(--table-border-color);
+  padding: 2px 4px;
+}
