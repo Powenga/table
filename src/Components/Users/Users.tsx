@@ -34,7 +34,7 @@ const Users: FC = () => {
     }),
   ];
 
-  return <Table data={data} columns={columns} />;
+  return <Table data={data} columns={columns} enableColumnResizing />;
 };
 
 export default Users;

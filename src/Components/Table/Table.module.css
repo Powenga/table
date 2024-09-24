@@ -12,10 +12,38 @@
   border-right: 1px solid var(--table-border-color);
   padding: 2px 4px;
   background-color: var(--table-header-background-color);
+  position: relative;
 }
 
 .table__cell {
   border-bottom: 1px solid var(--table-border-color);
   border-right: 1px solid var(--table-border-color);
   padding: 2px 4px;
+}
+
+.table__resizer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 5px;
+  cursor: col-resize;
+  user-select: none;
+  touch-action: none;
+  opacity: 0.3;
+}
+
+.table__resizer::before {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.table__resizer:hover {
+  opacity: 1;
 }
