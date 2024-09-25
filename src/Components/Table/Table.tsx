@@ -11,15 +11,17 @@ import {
 import classes from "./Table.module.css";
 import { useState } from "react";
 import Filter from "./Filter/Filter";
+import classNames from "classnames";
 
 interface Props<T> {
   data: T[];
   columns: AccessorKeyColumnDef<T, string>[];
   enableColumnResizing?: boolean;
+  className?: string;
 }
 
 export const Table = <T,>(props: Props<T>) => {
-  const { data, columns, enableColumnResizing = false } = props;
+  const { data, columns, enableColumnResizing = false, className } = props;
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -39,7 +41,7 @@ export const Table = <T,>(props: Props<T>) => {
   });
 
   return (
-    <table className={classes.table}>
+    <table className={classNames(classes.table, className)}>
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>

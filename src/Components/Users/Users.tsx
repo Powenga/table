@@ -3,6 +3,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "../Table/Table";
 import { User } from "../../types/user";
 import { data } from "../../data";
+import classes from "./Users.module.css";
 
 const Users: FC = () => {
   const columnHelper = createColumnHelper<User>();
@@ -10,7 +11,7 @@ const Users: FC = () => {
   const columns = [
     columnHelper.accessor("lastName", {
       cell: (props) => props.getValue(),
-      header: "Фамиля",
+      header: "Фамилия",
       filterFn: "arrIncludesSome",
     }),
     columnHelper.accessor("firstName", {
@@ -40,7 +41,14 @@ const Users: FC = () => {
     }),
   ];
 
-  return <Table data={data} columns={columns} enableColumnResizing />;
+  return (
+    <Table
+      className={classes["users__table"]}
+      data={data}
+      columns={columns}
+      enableColumnResizing
+    />
+  );
 };
 
 export default Users;
