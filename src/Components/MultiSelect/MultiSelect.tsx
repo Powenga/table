@@ -46,6 +46,7 @@ const Multiselect: FC<Props> = ({
 
   return (
     <div className={classes.multiselect}>
+      <p className={classes["multiselect__title"]}>Фильтр</p>
       <input
         type="text"
         value={searchString}
