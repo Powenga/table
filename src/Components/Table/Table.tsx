@@ -11,6 +11,7 @@ import {
 import classes from "./Table.module.css";
 import { useState } from "react";
 import Filter from "./Filter/Filter";
+import Multiselect from "../MultiSelect/MultiSelect";
 
 interface Props<T> {
   data: T[];
@@ -36,6 +37,7 @@ export const Table = <T,>(props: Props<T>) => {
 
   return (
     <table className={classes.table}>
+      <Multiselect options={["Дима", "Миша", "Даша", "Петя"]} />
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
