@@ -1,0 +1,46 @@
+.filter {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.filter_has-filters::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: rgb(189, 28, 28);
+}
+
+.filter__button {
+  display: block;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.filter__button::after {
+  content: "";
+  display: block;
+  width: 80%;
+  height: 80%;
+  margin: 0 auto;
+  background: center / 80% no-repeat url("./filter.svg");
+}
+
+.filter_is-open .filter__button {
+  background: rgb(202, 202, 202);
+}
+
+.filter__container {
+  position: absolute;
+  top: calc(100% + 2px);
+  right: 0px;
+  box-shadow: 2px 2px 4px #9e9e9e;
+}

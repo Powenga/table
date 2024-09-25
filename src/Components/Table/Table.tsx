@@ -54,7 +54,7 @@ export const Table = <T,>(props: Props<T>) => {
                   header.getContext()
                 )}
                 {header.column.getCanFilter() ? (
-                  <div>
+                  <div className={classes["table__filter"]}>
                     <Filter column={header.column} />
                   </div>
                 ) : null}
