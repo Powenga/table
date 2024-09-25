@@ -2,6 +2,40 @@
   /*!*/
 }
 
+.header__content {
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header__content:disabled {
+  cursor: initial;
+}
+
+.header__content span {
+  width: min-content;
+  margin-right: 2px;
+}
+
+.header__arrow {
+  margin-left: 2px;
+  flex-shrink: 0;
+  flex-grow: 1;
+  top: 50%;
+}
+
+.header__arrow_type_asc {
+  transform: rotate(180deg);
+}
+
 .header__filter {
   position: absolute;
   right: 5px;

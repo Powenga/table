@@ -1,8 +1,9 @@
 import { flexRender, Header } from "@tanstack/react-table";
+import classNames from "classnames";
 import Filter from "../Filter/Filter";
+import arrowSrc from "./arrow.svg";
 
 import classes from "./HeaderContent.module.css";
-import classNames from "classnames";
 
 interface Props<T> {
   header: Header<T, unknown>;
@@ -10,9 +11,36 @@ interface Props<T> {
 
 const HeaderContent = <T,>(props: Props<T>) => {
   const { header } = props;
+
+  const renderArrow = () => {
+    const direction = header.column.getIsSorted();
+    if (!direction) {
+      return null;
+    }
+    return (
+      <img
+        src={arrowSrc}
+        className={classNames(
+          classes["header__arrow"],
+          direction === "asc" && classes["header__arrow_type_asc"]
+        )}
+      />
+    );
+  };
+
   return (
     <>
-      {flexRender(header.column.columnDef.header, header.getContext())}
+      <button
+        type="button"
+        className={classes["header__content"]}
+        disabled={!header.column.getCanSort()}
+        onClick={header.column.getToggleSortingHandler()}
+      >
+        <span>
+          {flexRender(header.column.columnDef.header, header.getContext())}
+        </span>
+        {renderArrow()}
+      </button>
 
       {header.column.getCanFilter() && (
         <div className={classes["header__filter"]}>
