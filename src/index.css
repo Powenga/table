@@ -8,6 +8,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  --backgound-color: #fff;
+
   --table-border-color: #ccc;
   --table-header-background-color: #f3f3f3;
 }

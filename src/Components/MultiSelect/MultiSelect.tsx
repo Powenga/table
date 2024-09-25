@@ -4,16 +4,34 @@ import classes from "./MultiSelect.module.css";
 const DEBOUNCE = 200;
 
 interface Props {
+  selectedValues: string[];
+  setSelectedValues: (selectedValues: string[]) => void;
   options: string[];
 }
 
-const Multiselect: FC<Props> = ({ options }) => {
+const Multiselect: FC<Props> = ({
+  selectedValues,
+  setSelectedValues,
+  options,
+}) => {
   const [searchString, setSearchString] = useState<string>("");
   const [filterdOptions, setFilteredOptions] = useState<string[]>([]);
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
     event.preventDefault();
     setSearchString(event.target.value);
+  };
+
+  const handleChangeValue: ChangeEventHandler<HTMLInputElement> = (event) => {
+    event.preventDefault();
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setSelectedValues([...selectedValues, event.target.value]);
+    } else {
+      setSelectedValues(
+        selectedValues.filter((value) => value !== event.target.value)
+      );
+    }
   };
 
   useEffect(() => {
@@ -38,7 +56,12 @@ const Multiselect: FC<Props> = ({ options }) => {
         {filterdOptions.map((option) => (
           <li key={option}>
             <label className={classes["multiselect__label"]}>
-              <input type="checkbox" value={option} />
+              <input
+                type="checkbox"
+                value={option}
+                onChange={handleChangeValue}
+                checked={selectedValues.includes(option)}
+              />
               <span>{option}</span>
             </label>
           </li>

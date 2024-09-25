@@ -1,5 +1,6 @@
 import { Column } from "@tanstack/react-table";
 import { useMemo } from "react";
+import Multiselect from "../../MultiSelect/MultiSelect";
 
 interface Props<T> {
   column: Column<T, unknown>;
@@ -17,17 +18,11 @@ const Filter = <T,>(props: Props<T>) => {
   );
 
   return (
-    <select
-      onChange={(e) => column.setFilterValue(e.target.value)}
-      value={columnFilterValue?.toString()}
-    >
-      <option value="">Все</option>
-      {sortedUniqueValues.map((value) => (
-        <option key={value} value={value}>
-          {value}
-        </option>
-      ))}
-    </select>
+    <Multiselect
+      selectedValues={columnFilterValue || []}
+      setSelectedValues={(filters) => column.setFilterValue(filters)}
+      options={sortedUniqueValues}
+    />
   );
 };
 

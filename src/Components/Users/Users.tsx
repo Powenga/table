@@ -11,26 +11,32 @@ const Users: FC = () => {
     columnHelper.accessor("lastName", {
       cell: (props) => props.getValue(),
       header: "Фамиля",
+      filterFn: "arrIncludesSome",
     }),
     columnHelper.accessor("firstName", {
       cell: (props) => props.getValue(),
       header: "Имя",
+      filterFn: "arrIncludesSome",
     }),
     columnHelper.accessor("phoneNumber", {
       cell: (props) => props.getValue(),
       header: "Номер телефона",
+      filterFn: "arrIncludesSome",
     }),
     columnHelper.accessor("mobileNumber", {
       cell: (props) => props.getValue(),
       header: "Мобильный телефон",
+      filterFn: "arrIncludesSome",
     }),
     columnHelper.accessor("email", {
       cell: (props) => props.getValue(),
       header: "Email",
+      filterFn: "arrIncludesSome",
     }),
     columnHelper.accessor("address", {
       cell: (props) => props.getValue(),
       header: "Адрес",
+      filterFn: "arrIncludesSome",
     }),
   ];
 
