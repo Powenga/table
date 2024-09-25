@@ -3,8 +3,14 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getFilteredRowModel,
+  getFacetedUniqueValues,
+  getFacetedRowModel,
+  ColumnFiltersState,
 } from "@tanstack/react-table";
 import classes from "./Table.module.css";
+import { useState } from "react";
+import Filter from "./Filter/Filter";
 
 interface Props<T> {
   data: T[];
@@ -15,10 +21,15 @@ interface Props<T> {
 export const Table = <T,>(props: Props<T>) => {
   const { data, columns, enableColumnResizing = false } = props;
 
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
     enableColumnResizing,
     columnResizeMode: "onChange",
   });
@@ -38,6 +49,11 @@ export const Table = <T,>(props: Props<T>) => {
                   header.column.columnDef.header,
                   header.getContext()
                 )}
+                {header.column.getCanFilter() ? (
+                  <div>
+                    <Filter column={header.column} />
+                  </div>
+                ) : null}
                 {header.column.getCanResize() && (
                   <div
                     onMouseDown={header.getResizeHandler()}
