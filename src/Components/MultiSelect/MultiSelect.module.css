@@ -1,0 +1,21 @@
+.multiselect {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.multiselect__input {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.multiselect__options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.multiselect__label {
+  cursor: pointer;
+}

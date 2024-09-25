@@ -28,11 +28,16 @@ const Multiselect: FC<Props> = ({ options }) => {
 
   return (
     <div className={classes.multiselect}>
-      <input type="text" value={searchString} onChange={handleSearch} />
+      <input
+        type="text"
+        value={searchString}
+        onChange={handleSearch}
+        className={classes["multiselect__input"]}
+      />
       <ul className={classes["multiselect__options"]}>
         {filterdOptions.map((option) => (
           <li key={option}>
-            <label>
+            <label className={classes["multiselect__label"]}>
               <input type="checkbox" value={option} />
               <span>{option}</span>
             </label>
