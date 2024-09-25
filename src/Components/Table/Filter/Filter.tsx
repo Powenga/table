@@ -1,8 +1,10 @@
 import { Column } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Multiselect from "../../MultiSelect/MultiSelect";
 import classNames from "classnames";
 import classes from "./Filter.module.css";
+import { useHandleClickOutside } from "../../../hooks/useHandleClickOutside";
+import { useHandleEscKeydown } from "../../../hooks/useHandleEscKeydown";
 
 interface Props<T> {
   column: Column<T, unknown>;
@@ -11,21 +13,28 @@ interface Props<T> {
 const Filter = <T,>(props: Props<T>) => {
   const { column } = props;
   const [isOpen, setIsOpen] = useState(false);
-
-  const toogleOpen = () => {
-    setIsOpen(!isOpen);
-  };
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  useHandleClickOutside(containerRef, handleClose);
+  useHandleEscKeydown(handleClose);
 
   const columnFilterValue = column.getFilterValue() as string[];
 
   const sortedUniqueValues = useMemo(
-    () =>
-      Array.from(column.getFacetedUniqueValues().keys()).sort().slice(0, 5000),
+    () => Array.from(column.getFacetedUniqueValues().keys()).sort(),
     [column.getFacetedUniqueValues()]
   );
 
+  function handleClose() {
+    setIsOpen(false);
+  }
+
+  function toogleOpen() {
+    setIsOpen(!isOpen);
+  }
+
   return (
     <div
+      ref={containerRef}
       className={classNames(
         classes.filter,
         isOpen && classes["filter_is-open"],

@@ -42,5 +42,5 @@
   position: absolute;
   top: calc(100% + 2px);
   right: 0px;
-  box-shadow: 2px 2px 4px #9e9e9e;
+  box-shadow: 1px 1px 5px #9e9e9e;
 }
