@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "../Table/Table";
-import { User } from "../../types/user";
 import { data } from "../../data";
+import { IUser } from "../../types/user";
+
 import classes from "./Users.module.css";
 
 const Users: FC = () => {
-  const columnHelper = createColumnHelper<User>();
+  const columnHelper = createColumnHelper<IUser>();
 
   const columns = [
     columnHelper.accessor("lastName", {

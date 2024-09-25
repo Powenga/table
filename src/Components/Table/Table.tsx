@@ -1,3 +1,5 @@
+import { useState } from "react";
+import classNames from "classnames";
 import {
   AccessorKeyColumnDef,
   flexRender,
@@ -7,11 +9,12 @@ import {
   getFacetedUniqueValues,
   getFacetedRowModel,
   ColumnFiltersState,
+  getSortedRowModel,
+  SortingState,
 } from "@tanstack/react-table";
+import HeaderContent from "./HeaderContent/HeaderContent";
+
 import classes from "./Table.module.css";
-import { useState } from "react";
-import Filter from "./Filter/Filter";
-import classNames from "classnames";
 
 interface Props<T> {
   data: T[];
@@ -24,18 +27,23 @@ export const Table = <T,>(props: Props<T>) => {
   const { data, columns, enableColumnResizing = false, className } = props;
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
     data,
     columns,
     state: {
       columnFilters,
+      sorting,
     },
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+
     enableColumnResizing,
     columnResizeMode: "onChange",
   });
@@ -51,26 +59,7 @@ export const Table = <T,>(props: Props<T>) => {
                 className={classes["table__header"]}
                 style={{ width: header.getSize() }}
               >
-                {flexRender(
-                  header.column.columnDef.header,
-                  header.getContext()
-                )}
-                {header.column.getCanFilter() ? (
-                  <div className={classes["table__filter"]}>
-                    <Filter column={header.column} />
-                  </div>
-                ) : null}
-                {header.column.getCanResize() && (
-                  <div
-                    onMouseDown={header.getResizeHandler()}
-                    onTouchStart={header.getResizeHandler()}
-                    className={`${classes["table__resizer"]} ${
-                      header.column.getIsResizing()
-                        ? classes["table__resizer_is-resizing"]
-                        : ""
-                    }`}
-                  />
-                )}
+                <HeaderContent header={header} />
               </th>
             ))}
           </tr>

@@ -21,37 +21,3 @@
   border-right: 1px solid var(--table-border-color);
   padding: 2px 4px;
 }
-
-.table__filter {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.table__resizer {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 5px;
-  cursor: col-resize;
-  user-select: none;
-  touch-action: none;
-  opacity: 0.3;
-}
-
-.table__resizer::before {
-  content: "";
-  display: block;
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 2px;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.table__resizer:hover {
-  opacity: 1;
-}
