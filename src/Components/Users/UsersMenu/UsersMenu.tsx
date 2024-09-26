@@ -19,9 +19,9 @@ const UsersMenu: FC<IProps> = ({ className }) => {
   const handleOpenAddModalDialog = () => setOpenAddModlaDialog(true);
   const handleCloseAddModalDialog = () => setOpenAddModlaDialog(false);
 
-  const { addUser, addUserStatus } = useAddUserMutation(
-    handleCloseAddModalDialog
-  );
+  const { addUser, addUserStatus } = useAddUserMutation({
+    onSettled: handleCloseAddModalDialog,
+  });
 
   const handleAddUser = (fields: TUserCreateDTO) => {
     addUser(fields);
@@ -41,6 +41,7 @@ const UsersMenu: FC<IProps> = ({ className }) => {
           name={ADD_USER_FORM_NAME}
           onCancel={handleCloseAddModalDialog}
           onSubmit={handleAddUser}
+          isSubmiting={addUserStatus === "pending"}
         />
       </Dialog>
     </div>

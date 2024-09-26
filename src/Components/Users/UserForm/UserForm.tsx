@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, TextField } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { IUser } from "../../../types/user";
 
@@ -65,6 +65,7 @@ interface Props {
   defaultValues?: TFields;
   onSubmit: (fields: TFields) => void;
   onCancel: () => void;
+  isSubmiting?: boolean;
 }
 
 const UserForm: FC<Props> = ({
@@ -72,10 +73,18 @@ const UserForm: FC<Props> = ({
   defaultValues = DEFAULT_VALUES,
   onSubmit,
   onCancel,
+  isSubmiting = false,
 }) => {
-  const { control, handleSubmit, reset } = useForm<TFields>({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isDirty, isValid },
+  } = useForm<TFields>({
     defaultValues,
   });
+
+  const isSubmitButtonDisabled = !isDirty || !isValid || isSubmiting;
 
   const handleCancel = () => {
     reset(defaultValues);
@@ -108,11 +117,24 @@ const UserForm: FC<Props> = ({
       ))}
 
       <div className={classes["user-form__buttons"]}>
-        <Button type="button" variant="outlined" onClick={handleCancel}>
+        <Button
+          type="button"
+          variant="outlined"
+          onClick={handleCancel}
+          disabled={isSubmiting}
+        >
           Отменить
         </Button>
-        <Button type="submit" variant="contained">
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{ position: "relative" }}
+          disabled={isSubmitButtonDisabled}
+        >
           Добавить
+          {isSubmiting && (
+            <CircularProgress size={24} sx={{ position: "absolute" }} />
+          )}
         </Button>
       </div>
     </form>
