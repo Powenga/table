@@ -1,4 +1,12 @@
 import { ChangeEventHandler, FC, useEffect, useState } from "react";
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import { FixedSizeList, ListChildComponentProps } from "react-window";
 import classes from "./MultiSelect.module.css";
 
 const DEBOUNCE = 200;
@@ -15,7 +23,7 @@ const Multiselect: FC<Props> = ({
   options,
 }) => {
   const [searchString, setSearchString] = useState<string>("");
-  const [filterdOptions, setFilteredOptions] = useState<string[]>([]);
+  const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
     event.preventDefault();
@@ -23,8 +31,10 @@ const Multiselect: FC<Props> = ({
   };
 
   const handleChangeValue: ChangeEventHandler<HTMLInputElement> = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     const isChecked = event.target.checked;
+    console.log(event.target.value, event.target.checked);
+
     if (isChecked) {
       setSelectedValues([...selectedValues, event.target.value]);
     } else {
@@ -44,6 +54,34 @@ const Multiselect: FC<Props> = ({
     return () => clearTimeout(timeout);
   }, [options, searchString]);
 
+  const filteredPrepOptions = filteredOptions.map((label) => ({
+    label,
+    checked: selectedValues.includes(label),
+  }));
+
+  function renderRow(props: ListChildComponentProps) {
+    const { index, style, data } = props;
+    const { items, onChange } = data;
+    const item = items[index];
+
+    return (
+      <ListItem style={style} key={index} component="div" disablePadding>
+        <ListItemText>
+          <FormControlLabel
+            control={
+              <Checkbox
+                value={item.label}
+                onChange={onChange}
+                checked={item.checked}
+              />
+            }
+            label={item.label}
+          />
+        </ListItemText>
+      </ListItem>
+    );
+  }
+
   return (
     <div className={classes.multiselect}>
       <p className={classes["multiselect__title"]}>Фильтр</p>
@@ -53,21 +91,25 @@ const Multiselect: FC<Props> = ({
         onChange={handleSearch}
         className={classes["multiselect__input"]}
       />
-      <ul className={classes["multiselect__options"]}>
-        {filterdOptions.map((option) => (
-          <li key={option}>
-            <label className={classes["multiselect__label"]}>
-              <input
-                type="checkbox"
-                value={option}
-                onChange={handleChangeValue}
-                checked={selectedValues.includes(option)}
-              />
-              <span>{option}</span>
-            </label>
-          </li>
-        ))}
-      </ul>
+      <Box
+        sx={{
+          width: "100%",
+          height: 250,
+          maxWidth: 250,
+          bgcolor: "background.paper",
+        }}
+      >
+        <FixedSizeList
+          height={250}
+          width={250}
+          itemSize={40}
+          itemData={{ items: filteredPrepOptions, onChange: handleChangeValue }}
+          itemCount={filteredPrepOptions.length}
+          overscanCount={5}
+        >
+          {renderRow}
+        </FixedSizeList>
+      </Box>
     </div>
   );
 };
