@@ -19,4 +19,8 @@
 
 .multiselect__title {
   margin: 0 0 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }

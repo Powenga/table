@@ -3,11 +3,13 @@ import {
   Box,
   Checkbox,
   FormControlLabel,
+  IconButton,
   ListItem,
   TextField,
   Typography,
 } from "@mui/material";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
+import DeleteIcon from "@mui/icons-material/Delete";
 import classes from "./MultiSelect.module.css";
 
 const DEBOUNCE = 200;
@@ -31,6 +33,8 @@ const Multiselect: FC<Props> = ({
 }) => {
   const [searchString, setSearchString] = useState<string>("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
+
+  const hasFilters = selectedValues.length;
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
     event.preventDefault();
@@ -98,6 +102,16 @@ const Multiselect: FC<Props> = ({
     <div className={classes.multiselect}>
       <div className={classes["multiselect__title"]}>
         <Typography variant="h6">Фильтр</Typography>
+        <IconButton
+          area-label="Удалить фильтры"
+          disabled={!hasFilters}
+          onClick={() => setSelectedValues([])}
+        >
+          <DeleteIcon
+            sx={{ color: hasFilters ? "#d50000" : "disabled" }}
+            fontSize="small"
+          />
+        </IconButton>
       </div>
       <div className={classes["multiselect__input"]}>
         <TextField
