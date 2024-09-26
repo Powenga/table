@@ -19,7 +19,12 @@ const Filter = <T,>(props: Props<T>) => {
   const columnFilterValue = column.getFilterValue() as string[];
 
   const sortedUniqueValues = useMemo(
-    () => Array.from(column.getFacetedUniqueValues().keys()).sort(),
+    () =>
+      Array.from(column.getFacetedUniqueValues().keys()).sort((a, b) =>
+        a.localeCompare(b, "ru")
+      ),
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [column.getFacetedUniqueValues()]
   );
 
@@ -61,8 +66,9 @@ const Filter = <T,>(props: Props<T>) => {
       >
         <Multiselect
           selectedValues={columnFilterValue || []}
-          setSelectedValues={(filters) => column.setFilterValue(filters)}
+          setSelectedValues={column.setFilterValue}
           options={sortedUniqueValues}
+          width={column.columnDef.meta?.filterWidth}
         />
       </Popover>
     </div>

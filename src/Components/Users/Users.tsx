@@ -41,6 +41,9 @@ const Users: FC = () => {
       cell: (props) => props.getValue(),
       header: "Адрес",
       filterFn: "arrIncludesSome",
+      meta: {
+        filterWidth: 400,
+      },
     }),
   ];
 
