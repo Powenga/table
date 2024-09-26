@@ -2,6 +2,7 @@ import { ChangeEventHandler, FC, useEffect, useState } from "react";
 import {
   Box,
   Checkbox,
+  Chip,
   FormControlLabel,
   IconButton,
   ListItem,
@@ -34,11 +35,17 @@ const Multiselect: FC<Props> = ({
   const [searchString, setSearchString] = useState<string>("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
 
-  const hasFilters = selectedValues.length;
+  const hasFilters = Boolean(selectedValues.length);
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
     event.preventDefault();
     setSearchString(event.target.value);
+  };
+
+  const handleDeleteValue = (value: string) => {
+    setSelectedValues(
+      selectedValues.filter((selectedValue) => selectedValue !== value)
+    );
   };
 
   const handleChangeValue: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -47,9 +54,7 @@ const Multiselect: FC<Props> = ({
     if (isChecked) {
       setSelectedValues([...selectedValues, event.target.value]);
     } else {
-      setSelectedValues(
-        selectedValues.filter((value) => value !== event.target.value)
-      );
+      handleDeleteValue(event.target.value);
     }
   };
 
@@ -113,6 +118,7 @@ const Multiselect: FC<Props> = ({
           />
         </IconButton>
       </div>
+
       <div className={classes["multiselect__input"]}>
         <TextField
           id="outlined-basic"
@@ -142,6 +148,29 @@ const Multiselect: FC<Props> = ({
           {renderRow}
         </FixedSizeList>
       </Box>
+      {hasFilters && (
+        <ul
+          className={classes["multiselect__chips"]}
+          style={{ width: width || DEFAULT_WIDTH }}
+        >
+          {selectedValues.map((option) => (
+            <li
+              key={option}
+              className={classes["multiselect__chips-item-wrap"]}
+            >
+              <Chip
+                sx={{
+                  fontSize: 12,
+                }}
+                size="small"
+                label={option}
+                variant="outlined"
+                onDelete={() => handleDeleteValue(option)}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
