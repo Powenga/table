@@ -11,6 +11,8 @@ import {
   ColumnFiltersState,
   getSortedRowModel,
   SortingState,
+  getPaginationRowModel,
+  PaginationState,
 } from "@tanstack/react-table";
 import HeaderContent from "./HeaderContent/HeaderContent";
 
@@ -28,6 +30,10 @@ export const Table = <T,>(props: Props<T>) => {
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
   const table = useReactTable({
     data,
@@ -35,6 +41,7 @@ export const Table = <T,>(props: Props<T>) => {
     state: {
       columnFilters,
       sorting,
+      pagination,
     },
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -43,7 +50,8 @@ export const Table = <T,>(props: Props<T>) => {
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
-
+    getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
     enableColumnResizing,
     columnResizeMode: "onChange",
   });
