@@ -5,3 +5,7 @@
 .users__table {
   width: 100%;
 }
+
+.users__menu {
+  margin-bottom: 10px;
+}
