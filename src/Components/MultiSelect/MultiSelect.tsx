@@ -4,6 +4,7 @@ import {
   Checkbox,
   FormControlLabel,
   ListItem,
+  TextField,
   Typography,
 } from "@mui/material";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
@@ -95,15 +96,19 @@ const Multiselect: FC<Props> = ({
 
   return (
     <div className={classes.multiselect}>
-      <Typography variant="subtitle1" className={classes["multiselect__title"]}>
-        Фильтр
-      </Typography>
-      <input
-        type="text"
-        value={searchString}
-        onChange={handleSearch}
-        className={classes["multiselect__input"]}
-      />
+      <div className={classes["multiselect__title"]}>
+        <Typography variant="h6">Фильтр</Typography>
+      </div>
+      <div className={classes["multiselect__input"]}>
+        <TextField
+          id="outlined-basic"
+          label="Поиск"
+          variant="outlined"
+          size="small"
+          value={searchString}
+          onChange={handleSearch}
+        />
+      </div>
       <Box
         sx={{
           width: "100%",
