@@ -19,21 +19,30 @@ import HeaderContent from "./HeaderContent/HeaderContent";
 
 import classes from "./Table.module.css";
 
+const DEFAULT_PAGESIZE = 10;
+
 interface Props<T> {
   data: T[];
   columns: AccessorKeyColumnDef<T, string>[];
   enableColumnResizing?: boolean;
+  pageSize?: number;
   className?: string;
 }
 
 export const Table = <T,>(props: Props<T>) => {
-  const { data, columns, enableColumnResizing = false, className } = props;
+  const {
+    data,
+    columns,
+    enableColumnResizing = false,
+    pageSize = DEFAULT_PAGESIZE,
+    className,
+  } = props;
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize,
   });
 
   const table = useReactTable({

@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { API_URL } from "../utils/config";
-import { IUser } from "../types/user";
+import { type IUser } from "../types/user";
 
 export const onSuccess = <T>(response: AxiosResponse<T>) =>
   Promise.resolve(response.data);

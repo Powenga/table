@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "../Table/Table";
+import { useGetUsersQuery } from "../../hooks/useQueries";
 import { IUser } from "../../types/user";
 
 import classes from "./Users.module.css";
-import { useGetUsersQuery } from "../../hooks/useQueries";
 
 const Users: FC = () => {
   const { users } = useGetUsersQuery();
