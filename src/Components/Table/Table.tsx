@@ -111,6 +111,7 @@ export const Table = <T,>(props: Props<T>) => {
             onChange={(_event, value) => {
               table.setPageIndex(value - 1);
             }}
+            page={table.getState().pagination.pageIndex + 1}
           />
         </Stack>
       </div>
