@@ -1,13 +1,11 @@
 import { FC } from "react";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { IUser } from "../../../types/user";
+import { TUserCreateDTO } from "../../../types/user";
 
 import classes from "./UserForm.module.css";
 
-type TFields = Omit<IUser, "id">;
-
-const DEFAULT_VALUES: TFields = {
+const DEFAULT_VALUES: TUserCreateDTO = {
   firstName: "",
   lastName: "",
   phoneNumber: "",
@@ -17,7 +15,7 @@ const DEFAULT_VALUES: TFields = {
 };
 
 const FIELDS: {
-  name: keyof TFields;
+  name: keyof TUserCreateDTO;
   label: string;
   size: "small" | "medium";
   required?: boolean;
@@ -62,8 +60,8 @@ const FIELDS: {
 
 interface Props {
   name: string;
-  defaultValues?: TFields;
-  onSubmit: (fields: TFields) => void;
+  defaultValues?: TUserCreateDTO;
+  onSubmit: (fields: TUserCreateDTO) => void;
   onCancel: () => void;
   isSubmiting?: boolean;
 }
@@ -80,7 +78,7 @@ const UserForm: FC<Props> = ({
     handleSubmit,
     reset,
     formState: { isDirty, isValid },
-  } = useForm<TFields>({
+  } = useForm<TUserCreateDTO>({
     defaultValues,
   });
 
