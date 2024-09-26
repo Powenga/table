@@ -1,10 +1,12 @@
+import { useMemo, useState } from "react";
 import { Column } from "@tanstack/react-table";
-import { useMemo, useRef, useState } from "react";
-import Multiselect from "../../MultiSelect/MultiSelect";
+import { Popover } from "@mui/material";
 import classNames from "classnames";
+import Multiselect from "../../MultiSelect/MultiSelect";
+
 import classes from "./Filter.module.css";
-import { useHandleClickOutside } from "../../../hooks/useHandleClickOutside";
-import { useHandleEscKeydown } from "../../../hooks/useHandleEscKeydown";
+
+const POPOVER_ID = "filter_popover_id";
 
 interface Props<T> {
   column: Column<T, unknown>;
@@ -12,10 +14,7 @@ interface Props<T> {
 
 const Filter = <T,>(props: Props<T>) => {
   const { column } = props;
-  const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  useHandleClickOutside(containerRef, handleClose);
-  useHandleEscKeydown(handleClose);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const columnFilterValue = column.getFilterValue() as string[];
 
@@ -24,20 +23,19 @@ const Filter = <T,>(props: Props<T>) => {
     [column.getFacetedUniqueValues()]
   );
 
-  function handleClose() {
-    setIsOpen(false);
-  }
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-  function toogleOpen() {
-    setIsOpen(!isOpen);
-  }
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div
-      ref={containerRef}
       className={classNames(
         classes.filter,
-        isOpen && classes["filter_is-open"],
+        !!anchorEl && classes["filter_is-open"],
         columnFilterValue && classes["filter_has-filters"]
       )}
     >
@@ -45,17 +43,28 @@ const Filter = <T,>(props: Props<T>) => {
         type="button"
         className={classes["filter__button"]}
         aria-label="Открыть фильтр"
-        onClick={toogleOpen}
+        onClick={handleClick}
       />
-      {isOpen && (
-        <div className={classes["filter__container"]}>
-          <Multiselect
-            selectedValues={columnFilterValue || []}
-            setSelectedValues={(filters) => column.setFilterValue(filters)}
-            options={sortedUniqueValues}
-          />
-        </div>
-      )}
+      <Popover
+        id={POPOVER_ID}
+        open={!!anchorEl}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <Multiselect
+          selectedValues={columnFilterValue || []}
+          setSelectedValues={(filters) => column.setFilterValue(filters)}
+          options={sortedUniqueValues}
+        />
+      </Popover>
     </div>
   );
 };
