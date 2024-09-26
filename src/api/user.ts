@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { API_URL } from "../utils/config";
-import type { IUser } from "../types/user";
+import type { IUser, TUserCreateDTO } from "../types/user";
 
 export const onSuccess = <T>(response: AxiosResponse<T>) =>
   Promise.resolve(response.data);
@@ -16,6 +16,9 @@ const apiInstance = axios.create({
 const usersApi = {
   getAllUsers: () =>
     apiInstance.get<IUser[]>("/users").then(onSuccess).catch(onError),
+
+  addUser: (user: TUserCreateDTO) =>
+    apiInstance.post("/users", user).then(onSuccess).catch(onError),
 };
 
 export default usersApi;

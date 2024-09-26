@@ -3,19 +3,27 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { Button, Dialog, DialogTitle } from "@mui/material";
 import { Table } from "../Table/Table";
 import { useGetUsersQuery } from "../../hooks/useQueries";
-import { IUser } from "../../types/user";
+import { IUser, TUserCreateDTO } from "../../types/user";
 import UserForm from "./UserForm/UserForm";
 
 import classes from "./Users.module.css";
+import { useAddUserMutation } from "../../hooks/useMutations";
 
 const ADD_USER_FORM_NAME = "add-user-form";
 
 const Users: FC = () => {
-  const { users } = useGetUsersQuery();
   const [openAddModalDialog, setOpenAddModlaDialog] = useState(false);
+  const { users } = useGetUsersQuery();
 
   const handleOpenAddModalDialog = () => setOpenAddModlaDialog(true);
   const handleCloseAddModalDialog = () => setOpenAddModlaDialog(false);
+  const handleAddUser = (fields: TUserCreateDTO) => {
+    addUser(fields);
+  };
+
+  const { addUser, addUserStatus } = useAddUserMutation(
+    handleCloseAddModalDialog
+  );
 
   const columnHelper = createColumnHelper<IUser>();
 
@@ -85,9 +93,7 @@ const Users: FC = () => {
         <UserForm
           name={ADD_USER_FORM_NAME}
           onCancel={handleCloseAddModalDialog}
-          onSubmit={(fields) => {
-            console.log(fields);
-          }}
+          onSubmit={handleAddUser}
         />
       </Dialog>
     </>

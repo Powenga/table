@@ -111,7 +111,7 @@ const UserForm: FC<Props> = ({
         <Button type="button" variant="outlined" onClick={handleCancel}>
           Отменить
         </Button>
-        <Button type="button" variant="contained">
+        <Button type="submit" variant="contained">
           Добавить
         </Button>
       </div>
