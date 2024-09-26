@@ -1,12 +1,14 @@
 import { FC } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "../Table/Table";
-import { data } from "../../data";
 import { IUser } from "../../types/user";
 
 import classes from "./Users.module.css";
+import { useGetUsersQuery } from "../../hooks/useQueries";
 
 const Users: FC = () => {
+  const { users } = useGetUsersQuery();
+
   const columnHelper = createColumnHelper<IUser>();
 
   const columns = [
@@ -42,10 +44,14 @@ const Users: FC = () => {
     }),
   ];
 
+  if (!users) {
+    return null;
+  }
+
   return (
     <Table
       className={classes["users__table"]}
-      data={data}
+      data={users}
       columns={columns}
       enableColumnResizing
     />
