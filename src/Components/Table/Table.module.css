@@ -21,3 +21,11 @@
   border-right: 1px solid var(--table-border-color);
   padding: 2px 4px;
 }
+
+.table__pagination {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

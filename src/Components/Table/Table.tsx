@@ -1,5 +1,6 @@
 import { useState } from "react";
 import classNames from "classnames";
+import { Stack, Pagination } from "@mui/material";
 import {
   AccessorKeyColumnDef,
   flexRender,
@@ -57,37 +58,51 @@ export const Table = <T,>(props: Props<T>) => {
   });
 
   return (
-    <table className={classNames(classes.table, className)}>
-      <thead>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th
-                key={header.id}
-                className={classes["table__header"]}
-                style={{ width: header.getSize() }}
-              >
-                <HeaderContent header={header} />
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody className={classes["table__body"]}>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <td
-                className={classes["table__cell"]}
-                key={cell.id}
-                style={{ width: cell.column.getSize() }}
-              >
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      <table className={classNames(classes.table, className)}>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  className={classes["table__header"]}
+                  style={{ width: header.getSize() }}
+                >
+                  <HeaderContent header={header} />
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody className={classes["table__body"]}>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td
+                  className={classes["table__cell"]}
+                  key={cell.id}
+                  style={{ width: cell.column.getSize() }}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className={classes["table__pagination"]}>
+        <Stack spacing={2}>
+          <Pagination
+            count={table.getPageCount()}
+            variant="outlined"
+            shape="rounded"
+            onChange={(_event, value) => {
+              table.setPageIndex(value - 1);
+            }}
+          />
+        </Stack>
+      </div>
+    </>
   );
 };
