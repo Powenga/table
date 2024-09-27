@@ -38,7 +38,7 @@ export const Table = <T,>(props: Props<T>) => {
     pageSize = DEFAULT_PAGESIZE,
     className,
   } = props;
-  const renders = useRenderCount();
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
@@ -69,7 +69,6 @@ export const Table = <T,>(props: Props<T>) => {
 
   return (
     <>
-      {renders}
       <table className={classNames(classes.table, className)}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (

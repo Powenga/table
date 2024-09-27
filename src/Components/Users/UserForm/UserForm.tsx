@@ -1,7 +1,9 @@
 import { FC } from "react";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { TUserCreateDTO } from "../../../types/user";
+import { createUserSchema } from "../../../utils/validation";
 
 import classes from "./UserForm.module.css";
 
@@ -21,6 +23,7 @@ const FIELDS: {
   required?: boolean;
   multiline?: boolean;
   rows?: number;
+  placeholder?: string;
 }[] = [
   {
     name: "lastName",
@@ -38,11 +41,13 @@ const FIELDS: {
     name: "phoneNumber",
     label: "Номер телефона",
     size: "small",
+    placeholder: "+7 (777) 777-77-77",
   },
   {
     name: "mobileNumber",
     label: "Номер моб. телефон",
     size: "small",
+    placeholder: "+7 (777) 777-77-77",
   },
   {
     name: "email",
@@ -79,7 +84,9 @@ const UserForm: FC<Props> = ({
     reset,
     formState: { isDirty, isValid },
   } = useForm<TUserCreateDTO>({
+    resolver: yupResolver(createUserSchema),
     defaultValues,
+    mode: "onTouched",
   });
 
   const isSubmitButtonDisabled = !isDirty || !isValid || isSubmiting;
@@ -94,25 +101,32 @@ const UserForm: FC<Props> = ({
       name={name}
       onSubmit={handleSubmit(onSubmit)}
       className={classes["user-form"]}
+      noValidate
     >
-      {FIELDS.map(({ name, label, size, required, rows, multiline }) => (
-        <Controller
-          key={name}
-          name={name}
-          control={control}
-          render={({ field }) => (
-            <TextField
-              label={label}
-              size={size}
-              value={field.value}
-              onChange={field.onChange}
-              required={required}
-              rows={rows}
-              multiline={multiline}
-            />
-          )}
-        />
-      ))}
+      {FIELDS.map(
+        ({ name, label, size, required, rows, multiline, placeholder }) => (
+          <Controller
+            key={name}
+            name={name}
+            control={control}
+            render={({ field, fieldState: { error } }) => (
+              <TextField
+                label={label}
+                size={size}
+                {...field}
+                value={field.value}
+                onChange={field.onChange}
+                required={required}
+                rows={rows}
+                multiline={multiline}
+                error={Boolean(error?.message)}
+                helperText={error?.message}
+                placeholder={placeholder}
+              />
+            )}
+          />
+        )
+      )}
 
       <div className={classes["user-form__buttons"]}>
         <Button
