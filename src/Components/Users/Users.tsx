@@ -88,6 +88,7 @@ const Users: FC = () => {
         selectedUserIdList={Object.entries(selectedUsers)
           .filter(([key, value]) => value && key)
           .map(([key]) => key)}
+        resetSelectedUsers={() => setSelectedUsers({})}
         className={classes["users__menu"]}
       />
       <Table
