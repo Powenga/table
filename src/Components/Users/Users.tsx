@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { createColumnHelper } from "@tanstack/react-table";
+import { FC, useState } from "react";
+import { createColumnHelper, RowSelectionState } from "@tanstack/react-table";
 import { Table } from "../Table/Table";
 import { useGetUsersQuery } from "../../hooks/useQueries";
 import { IUser } from "../../types/User";
@@ -14,6 +14,8 @@ const FILTER_FN = multiSelectFilterFunction;
 const Users: FC = () => {
   const { users } = useGetUsersQuery();
   const columnHelper = createColumnHelper<IUser>();
+
+  const [selectedUsers, setSelectedUsers] = useState<RowSelectionState>({});
 
   const columns = [
     columnHelper.display({
@@ -87,6 +89,8 @@ const Users: FC = () => {
         className={classes["users__table"]}
         data={users}
         columns={columns}
+        rowSelection={selectedUsers}
+        setRowSelection={setSelectedUsers}
         enableColumnResizing
       />
     </>
