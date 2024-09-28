@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { TUserCreateDTO } from "../../../types/user";
+import { TUserCreateDTO } from "../../../types/User";
 import { createUserSchema } from "../../../utils/validation";
 
 import classes from "./UserForm.module.css";

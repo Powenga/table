@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Button, Dialog, DialogTitle } from "@mui/material";
 import cn from "classnames";
 import { useAddUserMutation } from "../../../hooks/useMutations";
-import { TUserCreateDTO } from "../../../types/user";
+import { TUserCreateDTO } from "../../../types/User";
 import UserForm from "../UserForm/UserForm";
 
 import classes from "./UsersMenu.module.css";

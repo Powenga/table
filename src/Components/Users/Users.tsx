@@ -2,7 +2,7 @@ import { FC } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "../Table/Table";
 import { useGetUsersQuery } from "../../hooks/useQueries";
-import { IUser } from "../../types/user";
+import { IUser } from "../../types/User";
 
 import classes from "./Users.module.css";
 import UsersMenu from "./UsersMenu/UsersMenu";
