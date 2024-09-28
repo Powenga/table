@@ -11,6 +11,7 @@ import { removeEmptyFields } from "../../../utils/helper";
 const ADD_USER_FORM_NAME = "add-user-form";
 
 interface IProps {
+  selectedUserIdList: string[];
   className?: string;
 }
 

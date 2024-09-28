@@ -84,7 +84,12 @@ const Users: FC = () => {
 
   return (
     <>
-      <UsersMenu className={classes["users__menu"]} />
+      <UsersMenu
+        selectedUserIdList={Object.entries(selectedUsers)
+          .filter(([key, value]) => value && key)
+          .map(([key]) => key)}
+        className={classes["users__menu"]}
+      />
       <Table
         className={classes["users__table"]}
         data={users}
