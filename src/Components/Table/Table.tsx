@@ -60,7 +60,7 @@ export const Table = <T,>(props: Props<T>) => {
       columnFilters,
       sorting,
       pagination,
-      rowSelection,
+      ...(rowSelection && { rowSelection }),
     },
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
