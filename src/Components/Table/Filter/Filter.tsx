@@ -41,7 +41,7 @@ const Filter = <T,>(props: Props<T>) => {
       className={classNames(
         classes.filter,
         !!anchorEl && classes["filter_is-open"],
-        columnFilterValue && classes["filter_has-filters"]
+        columnFilterValue?.length && classes["filter_has-filters"]
       )}
     >
       <button

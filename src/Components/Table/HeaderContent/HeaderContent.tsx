@@ -12,6 +12,9 @@ interface Props<T> {
 const HeaderContent = <T,>(props: Props<T>) => {
   const { header } = props;
 
+  const renderHeaderContent = () =>
+    flexRender(header.column.columnDef.header, header.getContext());
+
   const renderArrow = () => {
     const direction = header.column.getIsSorted();
     if (!direction) {
@@ -30,17 +33,18 @@ const HeaderContent = <T,>(props: Props<T>) => {
 
   return (
     <>
-      <button
-        type="button"
-        className={classes["header__content"]}
-        disabled={!header.column.getCanSort()}
-        onClick={header.column.getToggleSortingHandler()}
-      >
-        <span>
-          {flexRender(header.column.columnDef.header, header.getContext())}
-        </span>
-        {renderArrow()}
-      </button>
+      {header.column.getCanSort() ? (
+        <button
+          type="button"
+          className={classes["header__content"]}
+          onClick={header.column.getToggleSortingHandler()}
+        >
+          <span>{renderHeaderContent()}</span>
+          {renderArrow()}
+        </button>
+      ) : (
+        renderHeaderContent()
+      )}
 
       {header.column.getCanFilter() && (
         <div className={classes["header__filter"]}>

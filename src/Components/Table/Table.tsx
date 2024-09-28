@@ -2,7 +2,6 @@ import { useState } from "react";
 import classNames from "classnames";
 import { Stack, Pagination } from "@mui/material";
 import {
-  AccessorKeyColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -14,16 +13,18 @@ import {
   SortingState,
   getPaginationRowModel,
   PaginationState,
+  ColumnDef,
 } from "@tanstack/react-table";
 import HeaderContent from "./HeaderContent/HeaderContent";
 
 import classes from "./Table.module.css";
+import { useRenderCount } from "../../hooks/useRenderCount";
 
 const DEFAULT_PAGESIZE = 10;
 
 interface Props<T> {
   data: T[];
-  columns: AccessorKeyColumnDef<T, string>[];
+  columns: ColumnDef<T, string>[];
   enableColumnResizing?: boolean;
   pageSize?: number;
   className?: string;
@@ -37,7 +38,7 @@ export const Table = <T,>(props: Props<T>) => {
     pageSize = DEFAULT_PAGESIZE,
     className,
   } = props;
-
+  const renders = useRenderCount();
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
@@ -62,12 +63,15 @@ export const Table = <T,>(props: Props<T>) => {
     onSortingChange: setSorting,
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: setPagination,
+    enableRowSelection: true,
     enableColumnResizing,
     columnResizeMode: "onChange",
+    debugTable: true,
   });
 
   return (
     <>
+      {renders}
       <table className={classNames(classes.table, className)}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -107,9 +111,12 @@ export const Table = <T,>(props: Props<T>) => {
             variant="outlined"
             shape="rounded"
             onChange={(_event, value) => {
-              table.setPageIndex(value - 1);
+              setPagination((pagination) => ({
+                ...pagination,
+                pageIndex: value - 1,
+              }));
             }}
-            page={table.getState().pagination.pageIndex + 1}
+            page={pagination.pageIndex + 1}
           />
         </Stack>
       </div>

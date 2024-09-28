@@ -7,6 +7,7 @@ import UsersMenu from "./UsersMenu/UsersMenu";
 import { multiSelectFilterFunction } from "../../utils/helper";
 
 import classes from "./Users.module.css";
+import { Checkbox } from "@mui/material";
 
 const FILTER_FN = multiSelectFilterFunction;
 
@@ -15,6 +16,30 @@ const Users: FC = () => {
   const columnHelper = createColumnHelper<IUser>();
 
   const columns = [
+    columnHelper.display({
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          {...{
+            checked: table.getIsAllRowsSelected(),
+            indeterminate: table.getIsSomeRowsSelected(),
+            onChange: table.getToggleAllRowsSelectedHandler(),
+          }}
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          {...{
+            checked: row.getIsSelected(),
+            disabled: !row.getCanSelect(),
+            indeterminate: row.getIsSomeSelected(),
+            onChange: row.getToggleSelectedHandler(),
+          }}
+        />
+      ),
+      enableResizing: false,
+      size: 40,
+    }),
     columnHelper.accessor("lastName", {
       cell: (props) => props.getValue(),
       header: "Фамилия",
