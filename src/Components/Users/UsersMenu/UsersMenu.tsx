@@ -6,6 +6,7 @@ import { TUserCreateDTO } from "../../../types/User";
 import UserForm from "../UserForm/UserForm";
 
 import classes from "./UsersMenu.module.css";
+import { removeEmptyFields } from "../../../utils/helper";
 
 const ADD_USER_FORM_NAME = "add-user-form";
 
@@ -24,8 +25,10 @@ const UsersMenu: FC<IProps> = ({ className }) => {
   });
 
   const handleAddUser = (fields: TUserCreateDTO) => {
+    removeEmptyFields(fields);
     addUser(fields);
   };
+
   return (
     <div className={cn(classes["users-menu"], className)}>
       <Button
