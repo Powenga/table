@@ -20,9 +20,15 @@ const Filter = <T,>(props: Props<T>) => {
 
   const sortedUniqueValues = useMemo(
     () =>
-      Array.from(column.getFacetedUniqueValues().keys())
-        .filter((value) => value !== null)
-        .sort((a, b) => a?.localeCompare(b, "ru")),
+      Array.from(column.getFacetedUniqueValues().keys()).sort((a, b) => {
+        if (!a) {
+          return -1;
+        }
+        if (!b) {
+          return 1;
+        }
+        return a?.localeCompare(b, "ru");
+      }),
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [column.getFacetedUniqueValues()]

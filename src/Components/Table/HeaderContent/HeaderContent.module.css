@@ -23,7 +23,7 @@
 }
 
 .header__sort-button span {
-  margin-right: 25px;
+  margin-right: 32px;
 }
 
 .header__arrow {
@@ -32,7 +32,7 @@
   flex-shrink: 0;
   flex-grow: 1;
   top: 50%;
-  right: 13px;
+  right: 20px;
   transform: translateY(-50%);
 }
 
@@ -42,7 +42,7 @@
 
 .header__filter {
   position: absolute;
-  right: 0px;
+  right: 4px;
   top: 50%;
   transform: translateY(-50%);
 }
