@@ -24,12 +24,17 @@ const Filter = <T,>(props: Props<T>) => {
         if (!a) {
           return -1;
         }
+        if (!b) {
+          return 1;
+        }
         return a?.localeCompare(b, "ru");
       }),
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [column.getFacetedUniqueValues()]
   );
+
+  console.log(sortedUniqueValues.findIndex((value) => value === null));
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
