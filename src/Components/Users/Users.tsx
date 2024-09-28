@@ -3,9 +3,12 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "../Table/Table";
 import { useGetUsersQuery } from "../../hooks/useQueries";
 import { IUser } from "../../types/User";
+import UsersMenu from "./UsersMenu/UsersMenu";
+import { multiSelectFilterFunction } from "../../utils/helper";
 
 import classes from "./Users.module.css";
-import UsersMenu from "./UsersMenu/UsersMenu";
+
+const FILTER_FN = multiSelectFilterFunction;
 
 const Users: FC = () => {
   const { users } = useGetUsersQuery();
@@ -15,32 +18,32 @@ const Users: FC = () => {
     columnHelper.accessor("lastName", {
       cell: (props) => props.getValue(),
       header: "Фамилия",
-      filterFn: "arrIncludesSome",
+      filterFn: FILTER_FN,
     }),
     columnHelper.accessor("firstName", {
       cell: (props) => props.getValue(),
       header: "Имя",
-      filterFn: "arrIncludesSome",
+      filterFn: FILTER_FN,
     }),
     columnHelper.accessor("phoneNumber", {
       cell: (props) => props.getValue(),
       header: "Номер телефона",
-      filterFn: "arrIncludesSome",
+      filterFn: FILTER_FN,
     }),
     columnHelper.accessor("mobileNumber", {
       cell: (props) => props.getValue(),
       header: "Мобильный телефон",
-      filterFn: "arrIncludesSome",
+      filterFn: FILTER_FN,
     }),
     columnHelper.accessor("email", {
       cell: (props) => props.getValue(),
       header: "Email",
-      filterFn: "arrIncludesSome",
+      filterFn: FILTER_FN,
     }),
     columnHelper.accessor("address", {
       cell: (props) => props.getValue(),
       header: "Адрес",
-      filterFn: "arrIncludesSome",
+      filterFn: FILTER_FN,
       meta: {
         filterWidth: 400,
       },

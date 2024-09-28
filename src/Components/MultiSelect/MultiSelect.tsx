@@ -19,11 +19,13 @@ const DEFAULT_HEIGHT = 250;
 const ROW_HEIGHT = 40;
 const OVERSCAN_COUNT = 5;
 
+type TValue = string | null;
+
 interface Props {
-  selectedValues: string[];
-  setSelectedValues: (selectedValues: string[]) => void;
+  selectedValues: TValue[];
+  setSelectedValues: (selectedValues: TValue[]) => void;
   width?: number;
-  options: string[];
+  options: TValue[];
 }
 
 const Multiselect: FC<Props> = ({
@@ -33,7 +35,7 @@ const Multiselect: FC<Props> = ({
   options,
 }) => {
   const [searchString, setSearchString] = useState<string>("");
-  const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
+  const [filteredOptions, setFilteredOptions] = useState<TValue[]>([]);
 
   const hasFilters = Boolean(selectedValues.length);
 
@@ -42,7 +44,7 @@ const Multiselect: FC<Props> = ({
     setSearchString(event.target.value);
   };
 
-  const handleDeleteValue = (value: string) => {
+  const handleDeleteValue = (value: TValue) => {
     setSelectedValues(
       selectedValues.filter((selectedValue) => selectedValue !== value)
     );
@@ -50,20 +52,26 @@ const Multiselect: FC<Props> = ({
 
   const handleChangeValue: ChangeEventHandler<HTMLInputElement> = (event) => {
     const isChecked = event.target.checked;
+    const value = event.target.value || null;
 
     if (isChecked) {
-      setSelectedValues([...selectedValues, event.target.value]);
+      setSelectedValues([...selectedValues, value]);
     } else {
-      handleDeleteValue(event.target.value);
+      handleDeleteValue(value);
     }
   };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setFilteredOptions(
-        options.filter((option) =>
-          option.toLowerCase().includes(searchString.toLocaleLowerCase())
-        )
+        options.filter((option) => {
+          if (!searchString) {
+            return true;
+          }
+          return option
+            ?.toLowerCase()
+            .includes(searchString.toLocaleLowerCase());
+        })
       );
     }, DEBOUNCE);
 
@@ -88,14 +96,14 @@ const Multiselect: FC<Props> = ({
           }}
           control={
             <Checkbox
-              value={item.label}
+              value={item.label || ""}
               onChange={handleChangeValue}
               checked={item.checked}
             />
           }
           label={
             <Typography overflow="hidden" textOverflow="ellipsis">
-              {item.label}
+              {item.label || "-"}
             </Typography>
           }
         />

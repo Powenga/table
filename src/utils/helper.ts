@@ -1,3 +1,5 @@
+import { Row } from "@tanstack/react-table";
+
 export const removeEmptyFields = (
   obj: Record<string, string | null | undefined>
 ) => {
@@ -6,4 +8,15 @@ export const removeEmptyFields = (
       delete obj[key];
     }
   }
+};
+
+export const multiSelectFilterFunction = <T>(
+  row: Row<T>,
+  columnId: string,
+  filterValue: string[]
+) => {
+  if (!filterValue?.length) {
+    return true;
+  }
+  return filterValue.includes(row.getValue(columnId));
 };

@@ -16,13 +16,16 @@ const Filter = <T,>(props: Props<T>) => {
   const { column } = props;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-  const columnFilterValue = column.getFilterValue() as string[];
+  const columnFilterValue = column.getFilterValue() as (string | null)[];
 
   const sortedUniqueValues = useMemo(
     () =>
-      Array.from(column.getFacetedUniqueValues().keys())
-        .filter((value) => value !== null)
-        .sort((a, b) => a?.localeCompare(b, "ru")),
+      Array.from(column.getFacetedUniqueValues().keys()).sort((a, b) => {
+        if (!a) {
+          return -1;
+        }
+        return a?.localeCompare(b, "ru");
+      }),
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [column.getFacetedUniqueValues()]
@@ -41,7 +44,7 @@ const Filter = <T,>(props: Props<T>) => {
       className={classNames(
         classes.filter,
         !!anchorEl && classes["filter_is-open"],
-        columnFilterValue && classes["filter_has-filters"]
+        columnFilterValue?.length && classes["filter_has-filters"]
       )}
     >
       <button

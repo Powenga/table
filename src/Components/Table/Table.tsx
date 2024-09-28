@@ -18,7 +18,6 @@ import {
 import HeaderContent from "./HeaderContent/HeaderContent";
 
 import classes from "./Table.module.css";
-import { useRenderCount } from "../../hooks/useRenderCount";
 
 const DEFAULT_PAGESIZE = 10;
 
