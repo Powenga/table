@@ -29,6 +29,7 @@ interface Props<T> {
   enableColumnResizing?: boolean;
   pageSize?: number;
   className?: string;
+  rowIdGetter?: (originalRow: T) => string;
   rowSelection?: RowSelectionState;
   setRowSelection?: Dispatch<React.SetStateAction<RowSelectionState>>;
 }
@@ -40,6 +41,7 @@ export const Table = <T,>(props: Props<T>) => {
     enableColumnResizing = false,
     pageSize = DEFAULT_PAGESIZE,
     className,
+    rowIdGetter,
     rowSelection,
     setRowSelection,
   } = props;
@@ -73,6 +75,7 @@ export const Table = <T,>(props: Props<T>) => {
     enableRowSelection: true,
     enableColumnResizing,
     columnResizeMode: "onChange",
+    getRowId: rowIdGetter,
     debugTable: true,
   });
 

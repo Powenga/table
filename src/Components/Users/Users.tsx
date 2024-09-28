@@ -89,6 +89,7 @@ const Users: FC = () => {
         className={classes["users__table"]}
         data={users}
         columns={columns}
+        rowIdGetter={(row) => row.id}
         rowSelection={selectedUsers}
         setRowSelection={setSelectedUsers}
         enableColumnResizing
