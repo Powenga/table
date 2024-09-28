@@ -20,6 +20,7 @@ const Users: FC = () => {
       id: "select",
       header: ({ table }) => (
         <Checkbox
+          size="small"
           {...{
             checked: table.getIsAllRowsSelected(),
             indeterminate: table.getIsSomeRowsSelected(),
@@ -29,6 +30,7 @@ const Users: FC = () => {
       ),
       cell: ({ row }) => (
         <Checkbox
+          size="small"
           {...{
             checked: row.getIsSelected(),
             disabled: !row.getCanSelect(),
@@ -37,8 +39,7 @@ const Users: FC = () => {
           }}
         />
       ),
-      enableResizing: false,
-      size: 40,
+      size: 38,
     }),
     columnHelper.accessor("lastName", {
       cell: (props) => props.getValue(),

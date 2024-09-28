@@ -1,5 +1,5 @@
 import { flexRender, Header } from "@tanstack/react-table";
-import classNames from "classnames";
+import cn from "classnames";
 import Filter from "../Filter/Filter";
 import arrowSrc from "./arrow.svg";
 
@@ -7,10 +7,11 @@ import classes from "./HeaderContent.module.css";
 
 interface Props<T> {
   header: Header<T, unknown>;
+  className?: string;
 }
 
 const HeaderContent = <T,>(props: Props<T>) => {
-  const { header } = props;
+  const { header, className } = props;
 
   const renderHeaderContent = () =>
     flexRender(header.column.columnDef.header, header.getContext());
@@ -23,7 +24,7 @@ const HeaderContent = <T,>(props: Props<T>) => {
     return (
       <img
         src={arrowSrc}
-        className={classNames(
+        className={cn(
           classes["header__arrow"],
           direction === "asc" && classes["header__arrow_type_asc"]
         )}
@@ -32,11 +33,14 @@ const HeaderContent = <T,>(props: Props<T>) => {
   };
 
   return (
-    <>
+    <th
+      className={cn(className, classes["header-content"])}
+      style={{ width: header.getSize() }}
+    >
       {header.column.getCanSort() ? (
         <button
           type="button"
-          className={classes["header__content"]}
+          className={classes["header__sort-button"]}
           onClick={header.column.getToggleSortingHandler()}
         >
           <span>{renderHeaderContent()}</span>
@@ -55,14 +59,14 @@ const HeaderContent = <T,>(props: Props<T>) => {
         <div
           onMouseDown={header.getResizeHandler()}
           onTouchStart={header.getResizeHandler()}
-          className={classNames(
+          className={cn(
             classes["header__resizer"],
             header.column.getIsResizing() &&
               classes["header__resizer_is-resizing"]
           )}
         />
       )}
-    </>
+    </th>
   );
 };
 

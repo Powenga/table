@@ -10,11 +10,10 @@
 .table__header {
   border-bottom: 1px solid var(--table-border-color);
   border-right: 1px solid var(--table-border-color);
-  padding: 2px 25px 4px 4px;
   background-color: var(--table-header-background-color);
-  position: relative;
   text-align: left;
   box-sizing: border-box;
+  padding: 2px 4px;
 }
 
 .table__cell {

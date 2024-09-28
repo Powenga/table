@@ -77,13 +77,11 @@ export const Table = <T,>(props: Props<T>) => {
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th
+                <HeaderContent
                   key={header.id}
+                  header={header}
                   className={classes["table__header"]}
-                  style={{ width: header.getSize() }}
-                >
-                  <HeaderContent header={header} />
-                </th>
+                />
               ))}
             </tr>
           ))}
