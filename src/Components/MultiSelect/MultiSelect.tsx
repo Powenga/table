@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { matchSorter } from "match-sorter";
+
 import classes from "./MultiSelect.module.css";
 
 const DEBOUNCE = 200;
@@ -63,16 +65,12 @@ const Multiselect: FC<Props> = ({
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setFilteredOptions(
-        options.filter((option) => {
-          if (!searchString) {
-            return true;
-          }
-          return option
-            ?.toLowerCase()
-            .includes(searchString.toLocaleLowerCase());
-        })
-      );
+      setFilteredOptions(() => {
+        if (!searchString) {
+          return options;
+        }
+        return matchSorter(options, searchString);
+      });
     }, DEBOUNCE);
 
     return () => clearTimeout(timeout);
