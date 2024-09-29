@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { createColumnHelper, RowSelectionState } from "@tanstack/react-table";
 import { Table } from "../Table/Table";
 import { useGetUsersQuery } from "../../hooks/useQueries";
-import { IUser } from "../../types/User";
+import { IUser } from "../../shared/api/user";
 import UsersMenu from "./UsersMenu/UsersMenu";
 import { multiSelectFilterFunction } from "../../utils/helper";
 

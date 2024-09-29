@@ -1,13 +1,13 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { API_URL } from "../utils/config";
-import type { IUser, TUserCreateDTO } from "../types/User";
+import { API_URL } from "../../config/config";
+import type { IUser, TUserCreateDTO } from "./type";
 
 const USERS_LOCATION = "/users";
 
-export const onSuccess = <T>(response: AxiosResponse<T>) =>
+const onSuccess = <T>(response: AxiosResponse<T>) =>
   Promise.resolve(response.data);
 
-export const onError = (error: AxiosError<{ message?: string }>) => {
+const onError = (error: AxiosError<{ message?: string }>) => {
   return Promise.reject(error);
 };
 
@@ -15,7 +15,7 @@ const apiInstance = axios.create({
   baseURL: API_URL,
 });
 
-const usersApi = {
+export const usersApi = {
   getAllUsers: () =>
     apiInstance.get<IUser[]>(USERS_LOCATION).then(onSuccess).catch(onError),
 
@@ -28,5 +28,3 @@ const usersApi = {
       .then(onSuccess)
       .catch(onError),
 };
-
-export default usersApi;

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import usersApi from "../api/user";
-import { TUserCreateDTO } from "../types/User";
+import { usersApi } from "../shared/api/user";
+import { TUserCreateDTO } from "../shared/api/user";
 import { GET_USERS_QUERY_KEY } from "./useQueries";
 
 interface ICallbacks {

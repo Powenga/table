@@ -5,7 +5,7 @@ import {
   useAddUserMutation,
   useDeleteUsersMutation,
 } from "../../../hooks/useMutations";
-import { TUserCreateDTO } from "../../../types/User";
+import { TUserCreateDTO } from "../../../shared/api/user";
 import { removeEmptyFields } from "../../../utils/helper";
 import AddUserDialog from "../../../entities/user/ui/addUserDialog/AddUserDialog";
 import Dialog from "../../../shared/ui/dialog/Dialog";
