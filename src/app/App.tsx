@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Users from "./Components/Users/Users";
+import Users from "../Components/Users/Users";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { indigo } from "@mui/material/colors";
