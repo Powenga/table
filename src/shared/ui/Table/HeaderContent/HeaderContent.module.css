@@ -20,6 +20,7 @@
   align-items: center;
   position: relative;
   text-align: inherit;
+  width: 100%;
 }
 
 .header__sort-button:disabled {
@@ -28,6 +29,7 @@
 
 .header__sort-button span {
   margin-right: 32px;
+  overflow: hidden;
 }
 
 .header__arrow {

@@ -13,8 +13,11 @@ interface Props<T> {
 const HeaderContent = <T,>(props: Props<T>) => {
   const { header, className } = props;
 
-  const renderHeaderContent = () =>
-    flexRender(header.column.columnDef.header, header.getContext());
+  const renderHeaderContent = () => (
+    <span>
+      {flexRender(header.column.columnDef.header, header.getContext())}
+    </span>
+  );
 
   const renderArrow = () => {
     const direction = header.column.getIsSorted();
@@ -43,7 +46,7 @@ const HeaderContent = <T,>(props: Props<T>) => {
           className={classes["header__sort-button"]}
           onClick={header.column.getToggleSortingHandler()}
         >
-          <span>{renderHeaderContent()}</span>
+          {renderHeaderContent()}
           {renderArrow()}
         </button>
       ) : (
