@@ -4,7 +4,7 @@ import cn from "classnames";
 import {
   useAddUserMutation,
   useDeleteUsersMutation,
-} from "../../../hooks/useMutations";
+} from "../../../entities/user/model/useMutations";
 import { TUserCreateDTO } from "../../../shared/api/user";
 import { removeEmptyFields } from "../../../shared/lib";
 import AddUserDialog from "../../../entities/user/ui/addUserDialog/AddUserDialog";

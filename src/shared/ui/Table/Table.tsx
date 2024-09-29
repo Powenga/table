@@ -17,9 +17,9 @@ import {
   RowSelectionState,
 } from "@tanstack/react-table";
 import HeaderContent from "./HeaderContent/HeaderContent";
+import { useRenderCount } from "../../lib";
 
 import classes from "./Table.module.css";
-import { useRenderCount } from "../../hooks/useRenderCount";
 
 const DEFAULT_PAGESIZE = 10;
 
