@@ -1,17 +1,17 @@
 import { FC, useState } from "react";
 import { createColumnHelper, RowSelectionState } from "@tanstack/react-table";
 import { Checkbox } from "@mui/material";
-import { Table } from "../../shared/ui/Table/Table";
-import { useGetUsersQuery } from "../../entities/user";
-import { IUser } from "../../shared/api/user";
-import { multiSelectFilterFunction } from "../../shared/lib";
-import { UsersMenu } from "../../features/userMenu";
+import { Table } from "../../../shared/ui/Table/Table";
+import { useGetUsersQuery } from "../../../entities/user";
+import { IUser } from "../../../shared/api/user";
+import { multiSelectFilterFunction } from "../../../shared/lib";
+import { UsersMenu } from "../../../features/userMenu";
 
 import classes from "./Users.module.css";
 
 const FILTER_FN = multiSelectFilterFunction;
 
-const Users: FC = () => {
+export const Users: FC = () => {
   const { users } = useGetUsersQuery();
   const columnHelper = createColumnHelper<IUser>();
 
@@ -103,5 +103,3 @@ const Users: FC = () => {
     </>
   );
 };
-
-export default Users;
