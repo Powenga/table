@@ -6,11 +6,11 @@ import {
   useDeleteUsersMutation,
 } from "../../../hooks/useMutations";
 import { TUserCreateDTO } from "../../../types/User";
-import UserForm from "../UserForm/UserForm";
 
 import classes from "./UsersMenu.module.css";
 import { removeEmptyFields } from "../../../utils/helper";
 import ConfirmationForm from "../../ConfirmationForm/ConfirmationForm";
+import AddUserDialog from "../../../entities/user/ui/addUserDialog/AddUserDialog";
 
 const ADD_USER_FORM_NAME = "add-user-form";
 
@@ -67,15 +67,14 @@ const UsersMenu: FC<IProps> = ({
       >
         Удалить выбранные
       </Button>
-      <Dialog open={openAddDialog} onClose={handleCloseAddDialog}>
-        <DialogTitle>Добавить пользователя</DialogTitle>
-        <UserForm
-          name={ADD_USER_FORM_NAME}
-          onCancel={handleCloseAddDialog}
-          onSubmit={handleAddUser}
-          isSubmiting={addUserStatus === "pending"}
-        />
-      </Dialog>
+      <AddUserDialog
+        open={openAddDialog}
+        onClose={handleCloseAddDialog}
+        onSubmit={handleAddUser}
+        onCancel={handleCloseAddDialog}
+        isSubmiting={addUserStatus === "pending"}
+      />
+
       <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
         <DialogTitle>Добавить пользователя</DialogTitle>
         <ConfirmationForm
