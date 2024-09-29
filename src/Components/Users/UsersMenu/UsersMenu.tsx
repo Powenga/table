@@ -1,18 +1,29 @@
 import { FC, useState } from "react";
-import { Button, Dialog, DialogTitle } from "@mui/material";
+import { Button } from "@mui/material";
 import cn from "classnames";
 import {
   useAddUserMutation,
   useDeleteUsersMutation,
 } from "../../../hooks/useMutations";
 import { TUserCreateDTO } from "../../../types/User";
+import { removeEmptyFields } from "../../../utils/helper";
+import AddUserDialog from "../../../entities/user/ui/addUserDialog/AddUserDialog";
+import Dialog from "../../../shared/ui/dialog/Dialog";
 
 import classes from "./UsersMenu.module.css";
-import { removeEmptyFields } from "../../../utils/helper";
-import ConfirmationForm from "../../ConfirmationForm/ConfirmationForm";
-import AddUserDialog from "../../../entities/user/ui/addUserDialog/AddUserDialog";
 
-const ADD_USER_FORM_NAME = "add-user-form";
+const DELETE_USERS_FORM_NAME = "Удалить пользователей";
+
+const BUTTONS = {
+  submitButton: {
+    label: "Удалить",
+    variant: "contained" as const,
+  },
+  cancelButton: {
+    label: "Отменить",
+    variant: "outlined" as const,
+  },
+};
 
 interface IProps {
   selectedUserIdList: string[];
@@ -35,14 +46,14 @@ const UsersMenu: FC<IProps> = ({
   const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
 
   const { addUser, addUserStatus } = useAddUserMutation({
-    onSettled: handleCloseAddDialog,
+    onSuccess: handleCloseAddDialog,
   });
+
   const { deleteUsers, deleteUsersStatus } = useDeleteUsersMutation({
     onSuccess: () => {
       resetSelectedUsers(selectedUserIdList);
       handleCloseDeleteDialog();
     },
-    // onSettled: handleCloseDeleteDialog,
   });
 
   const handleAddUser = (fields: TUserCreateDTO) => {
@@ -74,15 +85,17 @@ const UsersMenu: FC<IProps> = ({
         onCancel={handleCloseAddDialog}
         isSubmiting={addUserStatus === "pending"}
       />
-
-      <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
-        <DialogTitle>Добавить пользователя</DialogTitle>
-        <ConfirmationForm
-          name={ADD_USER_FORM_NAME}
-          onCancel={handleCloseDeleteDialog}
-          onSubmit={handleDeleteUser}
-          content={`Вы действительно хотите удалить выбранных пользователей (${selectedUserIdList?.length})?`}
-        />
+      <Dialog
+        open={openDeleteDialog}
+        onClose={handleCloseDeleteDialog}
+        title={DELETE_USERS_FORM_NAME}
+        onSubmit={handleDeleteUser}
+        onCancel={handleCloseDeleteDialog}
+        isSubmiting={deleteUsersStatus === "pending"}
+        submitButton={BUTTONS.submitButton}
+        cancelButton={BUTTONS.cancelButton}
+      >
+        {`Вы действительно хотите удалить выбранных пользователей (${selectedUserIdList?.length})?`}
       </Dialog>
     </div>
   );
