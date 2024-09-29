@@ -57,6 +57,7 @@ const Dialog: FC<PropsWithChildren<Props>> = ({
           padding: PADDING,
           flexDirection: "row",
           justifyContent: "space-between",
+          gap: "24px",
         }}
       >
         <Button
