@@ -13,6 +13,7 @@ interface Props<T> {
 
 const HeaderContent = <T,>(props: Props<T>) => {
   const { header, isMobile = false, className } = props;
+  const Tag = isMobile ? "div" : "th";
 
   const renderHeaderContent = () => (
     <span>
@@ -37,7 +38,7 @@ const HeaderContent = <T,>(props: Props<T>) => {
   };
 
   return (
-    <th
+    <Tag
       className={cn(className, classes["header-content"])}
       style={{ flexBasis: !isMobile ? header.getSize() : "auto" }}
     >
@@ -70,7 +71,7 @@ const HeaderContent = <T,>(props: Props<T>) => {
           )}
         />
       )}
-    </th>
+    </Tag>
   );
 };
 

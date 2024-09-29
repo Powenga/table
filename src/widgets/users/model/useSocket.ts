@@ -3,7 +3,7 @@ import { socket } from "../../../shared/api/socket";
 
 export const useSocket = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
-  const [events, setEvents] = useState<string[]>([]);
+  const [events] = useState<string[]>([]);
 
   useEffect(() => {
     function onConnect() {
@@ -12,10 +12,6 @@ export const useSocket = () => {
 
     function onDisconnect() {
       setIsConnected(false);
-    }
-
-    function onEvent(value: string) {
-      setEvents((previous) => [...previous, value]);
     }
 
     socket.on("connect", onConnect);

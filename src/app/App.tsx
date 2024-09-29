@@ -20,8 +20,7 @@ const theme = createTheme({
 });
 
 function App() {
-  const { isConnected, events, socket } = useSocket();
-  console.log({ events, isConnected });
+  const { socket } = useSocket();
 
   useEffect(() => {
     socket.connect();
