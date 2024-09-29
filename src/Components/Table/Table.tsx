@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import classNames from "classnames";
 import { Stack, Pagination } from "@mui/material";
 import {
@@ -14,6 +14,7 @@ import {
   getPaginationRowModel,
   PaginationState,
   ColumnDef,
+  RowSelectionState,
 } from "@tanstack/react-table";
 import HeaderContent from "./HeaderContent/HeaderContent";
 
@@ -28,6 +29,9 @@ interface Props<T> {
   enableColumnResizing?: boolean;
   pageSize?: number;
   className?: string;
+  rowIdGetter?: (originalRow: T) => string;
+  rowSelection?: RowSelectionState;
+  setRowSelection?: Dispatch<React.SetStateAction<RowSelectionState>>;
 }
 
 export const Table = <T,>(props: Props<T>) => {
@@ -37,6 +41,9 @@ export const Table = <T,>(props: Props<T>) => {
     enableColumnResizing = false,
     pageSize = DEFAULT_PAGESIZE,
     className,
+    rowIdGetter,
+    rowSelection,
+    setRowSelection,
   } = props;
   const renders = useRenderCount();
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -53,6 +60,7 @@ export const Table = <T,>(props: Props<T>) => {
       columnFilters,
       sorting,
       pagination,
+      ...(rowSelection && { rowSelection }),
     },
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -63,9 +71,11 @@ export const Table = <T,>(props: Props<T>) => {
     onSortingChange: setSorting,
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: setPagination,
+    onRowSelectionChange: setRowSelection,
     enableRowSelection: true,
     enableColumnResizing,
     columnResizeMode: "onChange",
+    getRowId: rowIdGetter,
     debugTable: true,
   });
 

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import usersApi from "../api/user";
-import { TUserCreateDTO } from "../types/user";
+import { TUserCreateDTO } from "../types/User";
 import { GET_USERS_QUERY_KEY } from "./useQueries";
 
 interface ICallbacks {
@@ -30,5 +30,29 @@ export const useAddUserMutation = ({
   return {
     addUser: mutation.mutate,
     addUserStatus: mutation.status,
+  };
+};
+
+export const useDeleteUsersMutation = ({
+  onSuccess,
+  onError,
+  onSettled,
+}: ICallbacks) => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (idList: string[]) => {
+      return usersApi.delteUsers(idList);
+    },
+    onSuccess: () => {
+      onSuccess?.();
+      queryClient.invalidateQueries({ queryKey: [GET_USERS_QUERY_KEY] });
+    },
+    onError,
+    onSettled,
+  });
+
+  return {
+    deleteUsers: mutation.mutate,
+    deleteUsersStatus: mutation.status,
   };
 };
