@@ -74,7 +74,6 @@ export const Table = <T,>(props: Props<T>) => {
     enableColumnResizing,
     columnResizeMode: "onChange",
     getRowId: rowIdGetter,
-    debugTable: true,
   });
 
   return (

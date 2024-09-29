@@ -1,8 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { indigo } from "@mui/material/colors";
 import { Users } from "../widgets/users";
+import { useSocket } from "../widgets/users/model/useSocket";
 
 import "./App.css";
 
@@ -18,6 +20,17 @@ const theme = createTheme({
 });
 
 function App() {
+  const { isConnected, events, socket } = useSocket();
+  console.log({ events, isConnected });
+
+  useEffect(() => {
+    socket.connect();
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [socket]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
