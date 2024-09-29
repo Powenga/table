@@ -77,7 +77,6 @@ const FIELDS: {
 
 interface Props {
   open: boolean;
-  onClose: () => void;
   defaultValues?: TUserCreateDTO;
   onSubmit: (fields: TUserCreateDTO) => void;
   onCancel: () => void;
@@ -86,7 +85,6 @@ interface Props {
 
 const AddUserDialog: FC<Props> = ({
   open,
-  onClose,
   defaultValues = DEFAULT_VALUES,
   onSubmit,
   onCancel,
@@ -113,7 +111,7 @@ const AddUserDialog: FC<Props> = ({
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={handleCancel}
       title="Добавить пользователя"
       onSubmit={handleSubmit(onSubmit)}
       onCancel={handleCancel}

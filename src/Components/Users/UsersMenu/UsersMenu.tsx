@@ -80,7 +80,6 @@ const UsersMenu: FC<IProps> = ({
       </Button>
       <AddUserDialog
         open={openAddDialog}
-        onClose={handleCloseAddDialog}
         onSubmit={handleAddUser}
         onCancel={handleCloseAddDialog}
         isSubmiting={addUserStatus === "pending"}
