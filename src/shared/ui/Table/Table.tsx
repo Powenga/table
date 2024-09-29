@@ -17,7 +17,6 @@ import {
   RowSelectionState,
 } from "@tanstack/react-table";
 import HeaderContent from "./HeaderContent/HeaderContent";
-import { useRenderCount } from "../../lib";
 
 import classes from "./Table.module.css";
 
@@ -119,7 +118,10 @@ export const Table = <T,>(props: Props<T>) => {
                   className={classes["table__cell"]}
                   key={cell.id}
                   style={{ flexBasis: cell.column.getSize() }}
-                  data-label={cell.column.columnDef.header}
+                  data-label={
+                    typeof cell.column.columnDef.header === "string" &&
+                    cell.column.columnDef.header
+                  }
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
