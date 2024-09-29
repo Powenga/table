@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { usersApi } from "../../../shared/api/user";
 import { TUserCreateDTO } from "../../../shared/api/user";
-import { GET_USERS_QUERY_KEY } from "./useQueries";
+import { GET_USERS_QUERY_KEY } from "../../../entities/user";
 
 interface ICallbacks {
   onSuccess?: (data?: unknown) => void;

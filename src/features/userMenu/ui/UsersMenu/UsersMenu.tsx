@@ -4,11 +4,11 @@ import cn from "classnames";
 import {
   useAddUserMutation,
   useDeleteUsersMutation,
-} from "../../../entities/user/model/useMutations";
-import { TUserCreateDTO } from "../../../shared/api/user";
-import { removeEmptyFields } from "../../../shared/lib";
-import AddUserDialog from "../../../entities/user/ui/addUserDialog/AddUserDialog";
-import Dialog from "../../../shared/ui/Dialog/Dialog";
+} from "../../model/useMutations";
+import { AddUserDialog } from "../../../../entities/user";
+import { TUserCreateDTO } from "../../../../shared/api/user";
+import { removeEmptyFields } from "../../../../shared/lib";
+import Dialog from "../../../../shared/ui/Dialog/Dialog";
 
 import classes from "./UsersMenu.module.css";
 
@@ -32,7 +32,7 @@ interface IProps {
   className?: string;
 }
 
-const UsersMenu: FC<IProps> = ({
+export const UsersMenu: FC<IProps> = ({
   selectedUserIdList,
   resetSelectedUsers,
   className,
@@ -101,5 +101,3 @@ const UsersMenu: FC<IProps> = ({
     </div>
   );
 };
-
-export default UsersMenu;

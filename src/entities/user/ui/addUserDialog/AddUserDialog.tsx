@@ -83,7 +83,7 @@ interface Props {
   isSubmiting?: boolean;
 }
 
-const AddUserDialog: FC<Props> = ({
+export const AddUserDialog: FC<Props> = ({
   open,
   defaultValues = DEFAULT_VALUES,
   onSubmit,
@@ -153,5 +153,3 @@ const AddUserDialog: FC<Props> = ({
     </Dialog>
   );
 };
-
-export default AddUserDialog;

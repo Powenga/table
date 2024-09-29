@@ -2,10 +2,10 @@ import { FC, useState } from "react";
 import { createColumnHelper, RowSelectionState } from "@tanstack/react-table";
 import { Checkbox } from "@mui/material";
 import { Table } from "../../shared/ui/Table/Table";
-import { useGetUsersQuery } from "../../entities/user/model/useQueries";
+import { useGetUsersQuery } from "../../entities/user";
 import { IUser } from "../../shared/api/user";
-import UsersMenu from "./UsersMenu/UsersMenu";
 import { multiSelectFilterFunction } from "../../shared/lib";
+import { UsersMenu } from "../../features/userMenu";
 
 import classes from "./Users.module.css";
 
