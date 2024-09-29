@@ -1,13 +1,13 @@
 import { FC, useState } from "react";
 import { createColumnHelper, RowSelectionState } from "@tanstack/react-table";
+import { Checkbox } from "@mui/material";
 import { Table } from "../Table/Table";
 import { useGetUsersQuery } from "../../hooks/useQueries";
 import { IUser } from "../../shared/api/user";
 import UsersMenu from "./UsersMenu/UsersMenu";
-import { multiSelectFilterFunction } from "../../utils/helper";
+import { multiSelectFilterFunction } from "../../shared/lib";
 
 import classes from "./Users.module.css";
-import { Checkbox } from "@mui/material";
 
 const FILTER_FN = multiSelectFilterFunction;
 
