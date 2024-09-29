@@ -35,7 +35,7 @@ const HeaderContent = <T,>(props: Props<T>) => {
   return (
     <th
       className={cn(className, classes["header-content"])}
-      style={{ width: header.getSize() }}
+      style={{ flexBasis: header.getSize() }}
     >
       {header.column.getCanSort() ? (
         <button

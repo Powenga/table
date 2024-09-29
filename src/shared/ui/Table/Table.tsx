@@ -85,12 +85,12 @@ export const Table = <T,>(props: Props<T>) => {
       <table className={classNames(classes.table, className)}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <tr className={classes["table__header"]} key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <HeaderContent
                   key={header.id}
                   header={header}
-                  className={classes["table__header"]}
+                  className={classes["table__header-content"]}
                 />
               ))}
             </tr>
@@ -98,12 +98,12 @@ export const Table = <T,>(props: Props<T>) => {
         </thead>
         <tbody className={classes["table__body"]}>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr className={classes["table__row"]} key={row.id}>
               {row.getVisibleCells().map((cell) => (
                 <td
                   className={classes["table__cell"]}
                   key={cell.id}
-                  style={{ width: cell.column.getSize() }}
+                  style={{ flexBasis: cell.column.getSize() }}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>

@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { createColumnHelper, RowSelectionState } from "@tanstack/react-table";
 import { Checkbox } from "@mui/material";
-import { Table } from "../../../shared/ui/Table/Table";
+import { Table } from "../../../shared/ui/Table";
 import { useGetUsersQuery } from "../../../entities/user";
 import { IUser } from "../../../shared/api/user";
 import { multiSelectFilterFunction } from "../../../shared/lib";
@@ -41,7 +41,7 @@ export const Users: FC = () => {
           }}
         />
       ),
-      size: 38,
+      size: 50,
     }),
     columnHelper.accessor("lastName", {
       cell: (props) => props.getValue(),
