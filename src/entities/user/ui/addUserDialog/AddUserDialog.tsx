@@ -2,7 +2,7 @@ import { FC } from "react";
 import { TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Dialog from "../../../../shared/ui/dialog/Dialog";
+import Dialog from "../../../../shared/ui/Dialog/Dialog";
 import { TUserCreateDTO } from "../../../../shared/api/user";
 import { createUserSchema } from "../../../../shared/lib";
 

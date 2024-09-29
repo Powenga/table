@@ -8,7 +8,7 @@ import {
 import { TUserCreateDTO } from "../../../shared/api/user";
 import { removeEmptyFields } from "../../../shared/lib";
 import AddUserDialog from "../../../entities/user/ui/addUserDialog/AddUserDialog";
-import Dialog from "../../../shared/ui/dialog/Dialog";
+import Dialog from "../../../shared/ui/Dialog/Dialog";
 
 import classes from "./UsersMenu.module.css";
 

@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { createColumnHelper, RowSelectionState } from "@tanstack/react-table";
 import { Checkbox } from "@mui/material";
-import { Table } from "../Table/Table";
+import { Table } from "../../shared/ui/Table/Table";
 import { useGetUsersQuery } from "../../hooks/useQueries";
 import { IUser } from "../../shared/api/user";
 import UsersMenu from "./UsersMenu/UsersMenu";
