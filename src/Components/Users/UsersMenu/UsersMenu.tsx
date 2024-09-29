@@ -18,6 +18,7 @@ const BUTTONS = {
   submitButton: {
     label: "Удалить",
     variant: "contained" as const,
+    color: "secondary" as const,
   },
   cancelButton: {
     label: "Отменить",
@@ -73,6 +74,7 @@ const UsersMenu: FC<IProps> = ({
       <Button
         type="button"
         variant="contained"
+        color="secondary"
         onClick={handleOpenDeleteDialog}
         disabled={Boolean(!selectedUserIdList?.length)}
       >

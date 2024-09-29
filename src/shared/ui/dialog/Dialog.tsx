@@ -7,6 +7,8 @@ import {
   CircularProgress,
 } from "@mui/material";
 
+const PADDING = "16px 24px";
+
 interface Props {
   open: boolean;
   onClose: () => void;
@@ -16,12 +18,14 @@ interface Props {
   submitButton: {
     label: string;
     variant: "text" | "outlined" | "contained";
+    color?: "primary" | "secondary";
   };
   isSubmitButtonDisabled?: boolean;
   isSubmiting?: boolean;
   cancelButton: {
     label: string;
     variant: "text" | "outlined" | "contained";
+    color?: "primary" | "secondary";
   };
 }
 
@@ -42,7 +46,7 @@ const Dialog: FC<PropsWithChildren<Props>> = ({
       {title && <DialogTitle>{title}</DialogTitle>}
       <Box
         sx={{
-          padding: "24px",
+          padding: PADDING,
         }}
       >
         {children}
@@ -50,18 +54,24 @@ const Dialog: FC<PropsWithChildren<Props>> = ({
       <Box
         sx={{
           display: "flex",
-          padding: "24px",
+          padding: PADDING,
           flexDirection: "row",
           justifyContent: "space-between",
         }}
       >
-        <Button type="button" variant={cancelButton.variant} onClick={onCancel}>
+        <Button
+          type="button"
+          variant={cancelButton.variant}
+          onClick={onCancel}
+          color={cancelButton.color}
+        >
           {cancelButton.label}
         </Button>
         <Button
           sx={{ position: "relative" }}
           type="submit"
           variant={submitButton.variant}
+          color={submitButton.color}
           onClick={onSubmit}
           disabled={isSubmitButtonDisabled}
         >
