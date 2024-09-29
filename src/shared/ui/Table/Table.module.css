@@ -55,3 +55,38 @@
   justify-content: center;
   align-items: center;
 }
+
+@media screen and (max-width: 767px) {
+  .table {
+    border: none;
+  }
+
+  .table__header {
+    display: none;
+  }
+
+  .table__row {
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid var(--table-border-color);
+  }
+
+  .table__cell {
+    border-right: none;
+    min-height: 29px;
+    align-items: flex-start;
+    justify-content: space-between;
+    text-align: right;
+  }
+
+  .table__cell:before {
+    content: attr(data-label);
+    font-weight: 700;
+    margin-right: 20px;
+    text-align: left;
+  }
+
+  .table__cell:last-child {
+    border: none;
+  }
+}

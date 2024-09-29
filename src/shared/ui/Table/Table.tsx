@@ -104,10 +104,9 @@ export const Table = <T,>(props: Props<T>) => {
                   className={classes["table__cell"]}
                   key={cell.id}
                   style={{ flexBasis: cell.column.getSize() }}
+                  data-label={cell.column.columnDef.header}
                 >
-                  <span>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </span>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
             </tr>
