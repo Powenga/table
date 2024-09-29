@@ -7,11 +7,12 @@ import classes from "./HeaderContent.module.css";
 
 interface Props<T> {
   header: Header<T, unknown>;
+  isMobile?: boolean;
   className?: string;
 }
 
 const HeaderContent = <T,>(props: Props<T>) => {
-  const { header, className } = props;
+  const { header, isMobile = false, className } = props;
 
   const renderHeaderContent = () => (
     <span>
@@ -38,7 +39,7 @@ const HeaderContent = <T,>(props: Props<T>) => {
   return (
     <th
       className={cn(className, classes["header-content"])}
-      style={{ flexBasis: header.getSize() }}
+      style={{ flexBasis: !isMobile ? header.getSize() : "auto" }}
     >
       {header.column.getCanSort() ? (
         <button
@@ -58,7 +59,7 @@ const HeaderContent = <T,>(props: Props<T>) => {
           <Filter column={header.column} />
         </div>
       )}
-      {header.column.getCanResize() && (
+      {header.column.getCanResize() && !isMobile && (
         <div
           onMouseDown={header.getResizeHandler()}
           onTouchStart={header.getResizeHandler()}

@@ -1,5 +1,5 @@
-import { Dispatch, useState } from "react";
-import classNames from "classnames";
+import React, { Dispatch, useState } from "react";
+import cn from "classnames";
 import { Stack, Pagination } from "@mui/material";
 import {
   flexRender,
@@ -45,7 +45,6 @@ export const Table = <T,>(props: Props<T>) => {
     rowSelection,
     setRowSelection,
   } = props;
-  const renders = useRenderCount();
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
@@ -81,8 +80,24 @@ export const Table = <T,>(props: Props<T>) => {
 
   return (
     <>
-      {renders}
-      <table className={classNames(classes.table, className)}>
+      <div className={classes["table__mobile-filters"]}>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <React.Fragment key={headerGroup.id}>
+            {headerGroup.headers.map((header) => (
+              <HeaderContent
+                key={header.id}
+                header={header}
+                className={cn(
+                  classes["table__header-content"],
+                  classes["table__header-content_is-mobile"]
+                )}
+                isMobile
+              />
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
+      <table className={cn(classes.table, className)}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr className={classes["table__header"]} key={headerGroup.id}>
