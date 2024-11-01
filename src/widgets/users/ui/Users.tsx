@@ -1,21 +1,33 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { createColumnHelper, RowSelectionState } from "@tanstack/react-table";
 import { Checkbox } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
 import { Table } from "../../../shared/ui/Table";
-import { useGetUsersQuery } from "../../../entities/user";
+import { GET_USERS_QUERY_KEY, useGetUsersQuery } from "../../../entities/user";
 import { IUser } from "../../../shared/api/user";
 import { multiSelectFilterFunction } from "../../../shared/lib";
 import { UsersMenu } from "../../../features/userMenu";
+import { socket } from "../../../shared/api/socket";
+import { UPDATE_MESSAGE } from "../../../shared/config/config";
 
 import classes from "./Users.module.css";
 
 const FILTER_FN = multiSelectFilterFunction;
 
 export const Users: FC = () => {
+  const queryClient = useQueryClient();
   const { users } = useGetUsersQuery();
   const columnHelper = createColumnHelper<IUser>();
 
   const [selectedUsers, setSelectedUsers] = useState<RowSelectionState>({});
+
+  const updataMessageHandler = useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: [GET_USERS_QUERY_KEY] });
+  }, [queryClient]);
+
+  useEffect(() => {
+    socket.on(UPDATE_MESSAGE, updataMessageHandler);
+  }, [updataMessageHandler]);
 
   const columns = [
     columnHelper.display({
@@ -98,7 +110,7 @@ export const Users: FC = () => {
         rowIdGetter={(row) => row.id}
         rowSelection={selectedUsers}
         setRowSelection={setSelectedUsers}
-        enableColumnResizing
+        enableColumnResizing={false}
       />
     </>
   );

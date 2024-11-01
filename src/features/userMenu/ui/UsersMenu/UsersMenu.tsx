@@ -11,6 +11,10 @@ import { removeEmptyFields } from "../../../../shared/lib";
 import Dialog from "../../../../shared/ui/Dialog/Dialog";
 
 import classes from "./UsersMenu.module.css";
+import { socket } from "../../../../shared/api/socket";
+import { UPDATE_MESSAGE } from "../../../../shared/config/config";
+
+const sendUpdateMessage = () => socket.emit(UPDATE_MESSAGE);
 
 const DELETE_USERS_FORM_NAME = "Удалить пользователей";
 
@@ -47,13 +51,17 @@ export const UsersMenu: FC<IProps> = ({
   const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
 
   const { addUser, addUserStatus } = useAddUserMutation({
-    onSuccess: handleCloseAddDialog,
+    onSuccess: () => {
+      handleCloseAddDialog();
+      sendUpdateMessage();
+    },
   });
 
   const { deleteUsers, deleteUsersStatus } = useDeleteUsersMutation({
     onSuccess: () => {
       resetSelectedUsers(selectedUserIdList);
       handleCloseDeleteDialog();
+      sendUpdateMessage();
     },
   });
 
